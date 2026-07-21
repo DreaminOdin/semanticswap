@@ -271,7 +271,16 @@ gemessener Effekt, Wechselwirkungen.
   Profil (dauerhafte Fakten/Vorlieben), das immer oben im ARCHIVE-Prompt steht.
 - **Trick:** ebenfalls cache-testbar (Profil aus gespeicherten Summaries
   nachziehen, ein LLM-Call pro Instanz, statt Re-Ingestion).
-- **Effekt:** _[Hypothese, Run 8 läuft]_ — Ziel: preference.
+- **Effekt:** **[gemessen — gezielter Teilerfolg, netto negativ]** Gesamt
+  43,5 % (vs. 50 % ohne), Ersparnis 8,00x gehalten. ABER die Zielkategorie
+  **`preference` erreicht 75 % (3/4) — der beste Wert aller 14 Läufe**
+  (Baseline 50 %, andere Läufe teils 0 %). Das Profil wirkt also *genau dort,
+  wofür es gebaut wurde*, kostet aber anderswo (temporal 0/4): Es belegt
+  Platz im ARCHIVE-Prompt und verdrängt anderes.
+- **Lehre:** Ein Baustein kann seine Zielkategorie klar verbessern und
+  trotzdem netto schaden. Bei knappem Prompt-Budget ist jede Zeile ein
+  Verdrängungswettbewerb. → Sinnvoll nur, wenn Präferenz-Fragen der
+  dominante Anwendungsfall sind (z. B. Companion-Chat), nicht als Default.
 
 ---
 

@@ -62,3 +62,6 @@ Regeln:
 - Judge konstant halten (qwen2.5:7b lokal); jede Judge-Änderung wäre ein
   eigener Run.
 - Ergebnisse hier eintragen + JSON unter data/benchmarks/ behalten.
+
+| 14 | eval_config_gx10_run8.yaml | Gewinner + Profil-Gedächtnis (sauber, n=23) | 43,5 % | 8,00x | ⚠️ netto negativ, ABER Zielkategorie `preference` 75 % (bester Wert aller Läufe) |
+| **Bestätigung** | eval_config_gx10_run6.yaml | **Gewinner-Config auf 100 Instanzen** | ⏳ | ⏳ | läuft (ingestion-dominiert, resumefähig) — Launch-Grundlage |
