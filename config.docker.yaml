@@ -1,0 +1,53 @@
+# Default-Konfiguration für das Docker-Image.
+#
+# Annahme: Ollama läuft auf dem Docker-Host (Standard-Port 11434).
+# Modelle bereitstellen:  ollama pull qwen2.5:7b && ollama pull nomic-embed-text
+#
+# Eigene Konfiguration:   docker run -v ./meine-config.yaml:/app/config.yaml ...
+# Auth (empfohlen, sobald der Port nach außen geht) per Env:
+#   SEMANTICSWAP_AUTH_USER / SEMANTICSWAP_AUTH_PASSWORD
+
+gateway:
+  host: "0.0.0.0"          # Container-intern; nach außen mappt Docker
+  port: 8080
+  api_style: "openai"
+
+main_llm:
+  provider: "ollama"
+  model: "ollama/qwen2.5:7b"
+  api_base: "http://host.docker.internal:11434"
+  allow_client_model: true
+  client_model_prefix: "ollama/"
+  max_context_tokens: 8192
+  trigger_thresholds: [0.5, 0.9]
+
+sub_agents:
+  provider: "ollama"
+  concurrency_limit: 2
+  processing_mode: "batch"
+  api_base: "http://host.docker.internal:11434"
+  tasks:
+    summarization: "ollama/qwen2.5:7b"
+    entity_extraction: "ollama/qwen2.5:7b"
+    synthesizer: "ollama/qwen2.5:7b"
+
+embedding:
+  model: "ollama/nomic-embed-text"
+  api_base: "http://host.docker.internal:11434"
+  enabled: true
+
+storage:
+  db_path: "/data/semanticswap.db"   # als Volume mounten für Persistenz
+  vector_store: "sqlite_naive"
+  chunk_size: 1000
+
+compression:
+  keep_recent_messages: 4
+  low_priority_visible: 3
+
+retrieval:
+  enabled: true
+  top_k: 3
+  min_score: 0.35
+  max_injection_tokens: 2000
+  active_tool: true

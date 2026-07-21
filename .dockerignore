@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+data/
+*.db
+tests/
+docs/
+.gitignore
+config.server.yaml
+config.gx10.yaml
+eval_config_local.yaml
+eval_report_local.json

@@ -1,0 +1,22 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+data/
+.pytest_cache/
+
+# Deployment-spezifische Konfiguration: enthält Zugangsdaten und interne
+# Hostnamen/IPs — gehört NICHT ins öffentliche Repo.
+# Vorlage zum Kopieren: config.server.example.yaml
+config.server.yaml
+config.gx10.yaml
+eval_config_gx10_*.yaml
+eval_config_local.yaml
+eval_report_local.json
+docs/plan-auth-v2.md
+
+# Laufzeit-Artefakte
+*.db
+*.jsonl
+tiktoken-cache/
+docs/deploy-apimanufaktur.md

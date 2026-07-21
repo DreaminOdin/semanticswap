@@ -1,0 +1,47 @@
+gateway:
+  port: 8080
+  api_style: "openai"
+
+# Entscheidung PO 2026-07-15: keine Cloud-Keys - alle Inferenz lokal via Ollama.
+# Zwei Betriebsvarianten, rein per api_base umschaltbar:
+#   1) Ollama lokal auf dem MSI:   api_base weglassen (Default localhost:11434)
+#   2) Ollama auf dem GX10:        api_base: "http://<gx10-ip>:11434"
+# Haupt-LLM und Sub-Agenten können auf verschiedenen Hosts laufen.
+
+main_llm:
+  provider: "ollama"
+  model: "ollama/gemma4:26b"                # lokal auf dem MSI vorhanden
+  # api_base: "http://gx10:11434"           # alternativ: Haupt-LLM auf dem GX10
+  max_context_tokens: 8192
+  trigger_thresholds: [0.5, 0.9]
+
+sub_agents:
+  provider: "ollama"
+  concurrency_limit: 2                      # MSI-GPU: konservativ; GX10: 4+
+  processing_mode: "batch"                  # MVP: nur "batch" (Modus B), ADR-002
+  # api_base: "http://gx10:11434"           # Sub-Agenten auf den GX10 auslagern
+  tasks:
+    summarization: "ollama/zfujicute/OmniCoder-Qwen3.5-9B-Claude-4.6-Opus-Uncensored-v2-GGUF:latest"
+    entity_extraction: "ollama/zfujicute/OmniCoder-Qwen3.5-9B-Claude-4.6-Opus-Uncensored-v2-GGUF:latest"
+    synthesizer: "ollama/zfujicute/OmniCoder-Qwen3.5-9B-Claude-4.6-Opus-Uncensored-v2-GGUF:latest"
+    # Empfehlung: kleines Worker-Modell nachziehen (z. B. "ollama/llama3.2:3b"
+    # oder "ollama/qwen2.5:3b-instruct") - schneller und VRAM-schonender.
+
+embedding:
+  model: "ollama/nomic-embed-text"
+  # api_base: "http://gx10:11434"
+  enabled: true
+
+storage:
+  db_path: "./data/semanticswap.db"
+  vector_store: "sqlite_naive"   # austauschbar, siehe ADR-004
+  chunk_size: 1000               # Ziel-Tokengröße pro Segment
+
+compression:
+  keep_recent_messages: 4        # letzte N Messages bleiben immer unkomprimiert
+
+retrieval:                       # Swap-In v1 (ADR-008)
+  enabled: true
+  top_k: 3
+  min_score: 0.35                # Cosine-Mindestähnlichkeit
+  max_injection_tokens: 2000     # Budget für injizierte Original-Snippets

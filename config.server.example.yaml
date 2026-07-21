@@ -1,0 +1,62 @@
+# Vorlage für den Server-Betrieb. Kopieren nach config.server.yaml und
+# anpassen — die echte Datei ist bewusst per .gitignore ausgeschlossen
+# (sie enthält Zugangsdaten).
+#
+#   cp config.server.example.yaml config.server.yaml
+#   chmod 600 config.server.yaml
+#   python -m semanticswap.main config.server.yaml
+
+gateway:
+  host: "0.0.0.0"          # lauscht nach außen -> Auth unten ist PFLICHT
+  port: 8080
+  api_style: "openai"
+  # Basic-Auth für GUI + API. API-Clients senden das Passwort als API-Key.
+  # Alternativ per Env: SEMANTICSWAP_AUTH_USER / SEMANTICSWAP_AUTH_PASSWORD
+  auth_user: "CHANGEME"
+  auth_password: "CHANGEME-lange-passphrase"
+  # Optional (Auth v2): Geräte im eigenen Tailnet ohne Passwort zulassen.
+  # Vertrauen basiert auf der TCP-Quelle, nie auf Headern.
+  trust_tailnet: false
+  tailnet_users: []        # z. B. ["dein.login@example.com"]
+  device_cookie_days: 90
+
+main_llm:
+  provider: "ollama"
+  model: "ollama/qwen2.5:7b"
+  api_base: "http://127.0.0.1:11434"
+  allow_client_model: true
+  client_model_prefix: "ollama/"
+  max_context_tokens: 8192
+  trigger_thresholds: [0.5, 0.9]
+
+sub_agents:
+  provider: "ollama"
+  concurrency_limit: 2
+  processing_mode: "batch"
+  api_base: "http://127.0.0.1:11434"
+  tasks:
+    summarization: "ollama/qwen2.5:7b"
+    entity_extraction: "ollama/qwen2.5:7b"
+    synthesizer: "ollama/qwen2.5:7b"
+
+embedding:
+  model: "ollama/nomic-embed-text"
+  api_base: "http://127.0.0.1:11434"
+  enabled: true
+
+storage:
+  db_path: "./data/semanticswap.db"
+  vector_store: "sqlite_naive"
+  chunk_size: 1000
+
+compression:
+  keep_recent_messages: 4
+  low_priority_visible: 3
+
+retrieval:
+  enabled: true
+  hybrid: true             # Volltext + Vektoren (empfohlen, gemessen bester Wert)
+  top_k: 3
+  min_score: 0.35
+  max_injection_tokens: 2000
+  active_tool: true
