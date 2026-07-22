@@ -40,7 +40,7 @@ cache-testbar.
 | 12 | + **Cross-Encoder** (Kürzung 500) | 33,3 % (n=24) | 8,04x | ❌ schadet |
 | 13 | Cross-Encoder, Kürzung 1800 | 29,2 % (n=24) | 7,95x | ❌ Truncation war nicht die Ursache |
 | 14 | + Profil-Gedächtnis (sauber) | 43,5 % (n=23) | 8,00x | ⚠️ netto negativ, **aber Zielkategorie `preference` 75 %** — bester Wert aller Läufe |
-| ⏳ | **Gewinner-Config auf 100 Instanzen** | läuft | läuft | Launch-Grundlage (ingestion-dominiert, resumefähig) |
+| **✅ Bestätigung** | **Gewinner-Config auf 98 Instanzen** | **40,8 %** (40/98) | **8,07x** | belastbare Launch-Zahl: die 24er-Stichprobe (50 %) war optimistisch |
 
 ## Ergebnis
 

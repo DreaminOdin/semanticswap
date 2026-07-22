@@ -14,9 +14,10 @@ Profil) und spielt bei Bedarf die relevanten Original-Ausschnitte wieder ein.
 Ziel: „Erinnern" weit über das Kontextfenster hinaus, bei drastisch weniger
 Token — **lokal, ohne Cloud-Keys**.
 
-Gemessen (LongMemEval-S, 24er-Stichprobe, lokaler Judge): **Kontext-Ersparnis
-~8x, QA-Genauigkeit ~50 %** (Gewinner-Config Hybrid-Suche). Kernpfad headless
-(ADR-006), GUI optional.
+Gemessen (LongMemEval-S, **98 Instanzen**, lokaler Judge, gemma4:26b):
+**Kontext-Ersparnis ~8x, QA-Genauigkeit ~41 %** (Gewinner-Config Hybrid-Suche).
+Kernpfad headless (ADR-006), GUI optional. (Eine frühere 24er-Stichprobe
+zeigte optimistische 50 % — im Bestätigungslauf auf ~41 % korrigiert.)
 
 ## 2. Die zwei Pfade
 

@@ -13,6 +13,22 @@
 
 ---
 
+## 0. Die teuerste Lektion: kleine Stichproben täuschen  **[gemessen]**
+
+Die Gewinner-Config zeigte über **24 Instanzen 50 %** — und über **98 Instanzen
+nur 40,8 %**. Kein Fehler, sondern Statistik: Bei n=24 ist der 95%-Vertrauens-
+bereich ~±20 %, die 50 % lagen also im Rauschen um die wahren ~41 %. Die
+Ersparnis (8x) war dagegen stabil (viele Messpunkte pro Lauf).
+
+**Konsequenzen fürs ganze Cookbook:**
+- Alle 24er-Zahlen hier sind **Richtungsangaben**, keine Präzisionswerte.
+  Belastbar ist nur der 98er-Bestätigungslauf (~41 %).
+- Kategorie-Werte bei n=4 sind reines Rauschen — nur *Muster über mehrere Läufe*
+  zählen (deshalb war „6 Techniken, alle negativ" aussagekräftig, ein
+  Einzelwert nie).
+- Vor jeder veröffentlichten Zahl: Bestätigungslauf. Wir hatten fast die
+  optimistischen 50 % ins README geschrieben.
+
 ## 1. Die Methode: wie man ehrlich misst
 
 Diese fünf Regeln verhindern Selbstbetrug — die häufigste Falle beim Tuning.

@@ -12,15 +12,21 @@ Swap-Out (Modus B) mit virtuellem Pruning, Swap-In mit **Hybrid-Retrieval**
 (Volltext + Vektoren, RRF), Active Memory Retrieval, semantischer Garbage
 Collector, Auth (Geräte-Cookies/Rollen/Zugriffs-Logbuch) und Live-GUI.
 
-**Gemessen** (LongMemEval-S, 24er-Stichprobe, lokaler Judge, gemma4:26b):
-**~8x Kontext-Ersparnis bei 50 % QA-Genauigkeit** — von 30 % Baseline durch
-die Hybrid-Suche (+20 pp). Vollständige Messreihe (13 Läufe, 6 Techniken),
-Trade-offs und Lehren: **[docs/eval/tuning-cookbook.md](docs/eval/tuning-cookbook.md)**.
+**Gemessen** (LongMemEval-S, **98 Instanzen**, lokaler Judge, gemma4:26b):
+**~8x Kontext-Ersparnis bei ~41 % QA-Genauigkeit.** Die Hybrid-Suche
+(Volltext + Vektoren) war der große Hebel (+20 pp gegenüber reiner
+Vektorsuche); jede weitere semantische Aufbaustufe hat auf dem Benchmark
+geschadet. Vollständige Messreihe (14 Läufe, 6 Techniken), Trade-offs und
+Lehren: **[docs/eval/tuning-cookbook.md](docs/eval/tuning-cookbook.md)**.
 Gesamtarchitektur: [docs/architektur.md](docs/architektur.md) ·
 Entscheidungen: [docs/adr/](docs/adr/).
 
-> Die Zahlen sind self-reported (lokaler Judge statt GPT-4o wie im Paper) und
-> beruhen auf einer 24er-Stichprobe — ein größerer Bestätigungslauf steht aus.
+> **Ehrliche Einordnung:** Die Zahlen sind self-reported — lokaler Judge
+> (qwen2.5:7b) statt GPT-4o wie im Paper, und ein 26B-Antwortmodell. Sie sind
+> daher nicht direkt mit Paper-Bestwerten vergleichbar; das Kernversprechen ist
+> die **verlustarme 8x-Kompression bei vollständig lokalem Betrieb**. Eine
+> frühere 24er-Stichprobe zeigte optimistische 50 % — der 98er-Lauf korrigierte
+> das auf ~41 % (kleine Stichproben täuschen; genau dafür der Bestätigungslauf).
 
 Alle Inferenz läuft lokal über **Ollama** — wahlweise auf dieser Maschine (Default)
 oder remote (z. B. GX10) per `api_base` in der [config.yaml](config.yaml).
